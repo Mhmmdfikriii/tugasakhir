@@ -1,9 +1,9 @@
+plotly
 streamlit
 pandas
 geopandas
 folium
 streamlit-folium
-plotly
 scikit-learn
 openpyxl
 shapely
