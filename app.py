@@ -3,7 +3,6 @@ import numpy as np
 import pandas as pd
 import geopandas as gpd
 import folium
-from folium.plugins import HeatMap
 from streamlit_folium import st_folium
 from sklearn.ensemble import RandomForestRegressor
 from pathlib import Path
@@ -105,6 +104,9 @@ def load_data(src) -> pd.DataFrame:
             raw.columns = raw.iloc[0]
             df = raw[1:].copy().reset_index(drop=True)
         
+        # Normalisasi nama kolom ke string
+        df.columns = [str(c).strip() for c in df.columns]
+        
         # Normalisasi kolom KELURAHAN
         kelurahan_candidates = ['KELURAHAN', 'kelurahan', 'Kelurahan', 'NAMA', 'nama']
         for col in kelurahan_candidates:
@@ -135,8 +137,8 @@ def load_data(src) -> pd.DataFrame:
 def create_dummy_data() -> pd.DataFrame:
     """Buat data dummy jika file tidak tersedia."""
     kelurahan_list = [
-        'KARAWACI', 'CIMONE', 'CIPONDOH', 'TANAH TINGGI', 'SUKASARI',
-        'SUKARASA', 'CIBODAS', 'CILEDUG', 'LARANGAN', 'KARANG TENGAH'
+        'BATUCEPER', 'BATUJAYA', 'BATUSARI', 'KEBON BESAR', 'PORIS JAYA',
+        'PORISGAGA', 'BELENDUNG', 'BENDA', 'JURUMUDI', 'PAJANG'
     ]
     
     np.random.seed(42)
@@ -262,8 +264,8 @@ def main():
         st.error("Tidak dapat memuat data geografis!")
         return
     
-    # Identifikasi kolom tahun
-    year_cols = [c for c in df.columns if str(c).isdigit()]
+    # Identifikasi kolom tahun (sorted)
+    year_cols = sorted([c for c in df.columns if str(c).isdigit()])
     
     # Tampilkan peta
     st.subheader('🗺️ Peta Sebaran Kasus DBD')
@@ -290,7 +292,7 @@ def main():
             st.subheader('📊 Distribusi per Wilayah')
             if len(year_cols) > 0:
                 latest_year = sorted(year_cols)[-1]
-                top_10 = df.nlargest(10, latest_year)[['KELURAHAN', latest_year]]
+                top_10 = df.dropna(subset=[latest_year]).nlargest(10, latest_year)[['KELURAHAN', latest_year]]
                 st.bar_chart(
                     top_10.set_index('KELURAHAN')[latest_year],
                     use_container_width=True

@@ -1,16 +1,16 @@
 # Requirements untuk Dashboard DBD Tangerang
-# Kompatibel dengan Python 3.10 - 3.14
+# Kompatibel dengan Python 3.10+, Mac & WSL2
 
 # Core
 streamlit
 numpy
 pandas
 
-# Geospatial
+# Geospatial (pyogrio menggantikan fiona, sudah include GDAL binary wheels)
 geopandas
 shapely
 pyproj
-fiona
+pyogrio
 
 # Mapping
 folium
@@ -23,5 +23,5 @@ scikit-learn
 openpyxl
 xlrd
 
-# Optional performance improvements
+# Performance
 pyarrow
