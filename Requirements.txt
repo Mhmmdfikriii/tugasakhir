@@ -1,12 +1,27 @@
-plotly
-plotly_express
-streamlit
-pandas
-geopandas
-folium
-streamlit-folium
-scikit-learn
-openpyxl
-shapely
-fiona
-pyproj
+# Requirements untuk Dashboard DBD Tangerang
+# Kompatibel dengan Python 3.10 - 3.14
+
+# Core
+streamlit>=1.32.0,<2.0.0
+numpy>=1.26.0,<2.1.0
+pandas>=2.2.0,<3.0.0
+
+# Geospatial
+geopandas>=0.14.0,<1.0.0
+shapely>=2.0.0,<3.0.0
+pyproj>=3.6.0,<4.0.0
+fiona>=1.9.0,<2.0.0
+
+# Mapping
+folium>=0.15.0,<1.0.0
+streamlit-folium>=0.18.0,<1.0.0
+
+# Machine Learning
+scikit-learn>=1.4.0,<2.0.0
+
+# Excel support
+openpyxl>=3.1.0,<4.0.0
+xlrd>=2.0.0,<3.0.0
+
+# Optional performance improvements
+pyarrow>=15.0.0
